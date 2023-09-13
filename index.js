@@ -3,17 +3,18 @@ import express from "express";
 const app = express();
 
 app.use(express.json());
-app.get("/accountNumber/:id", (req, res) => {
+app.get("/api/v1.0/accounts/client/:client_id", (req, res) => {
     console.log(req.params)
     const account = {
         name: "test",
         balance: 2000,
-        accountNumber: "ES2131313123" 
+        account_number: "ES2131313123" 
+
     }
   res.send(account);
 });
 
-app.post("/createAccount/", (req, res) => {
+app.post("/api/v1.0/accounts/client", (req, res) => {
     // console.log(req.params)
     // const account = {
     //     name: "test",
@@ -22,24 +23,27 @@ app.post("/createAccount/", (req, res) => {
     // }
     console.log(req.body)
     const account = {
-      name: "test",
+      name: "test2",
       balance: 2000,
-      accountNumber: "ES2131313123" 
+      account_number: "ES2131313123" 
   }
 res.send(account);
 });
 
-app.patch("/updateBalance/:operation", (req, res) => {
+
+app.post("/api/v1.0/accounts/client/operation/:client_id", (req, res) => {
   // console.log(req.params)
   const {type , amount} = req.body;
-  const {operation} = req.params;
+  const {client_id} = req.params;
 
   const datos = {
-    type,
-    amount,
-    operation
+    operation_id: "12345",
+    operation_datetime: "2023-09-05T14:30:00Z",
+    client_id: client_id,
+    balance: amount
   }
-res.send(datos);
+  console.log({type})
+  res.send(datos);
 });
 
 app.listen(5000, () => {
